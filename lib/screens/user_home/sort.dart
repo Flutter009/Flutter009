@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice/filtered_screens/authors.dart';
+import 'package:practice/widgets/sort_options.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class Sort extends StatefulWidget {
@@ -23,50 +24,39 @@ class _SortState extends State<Sort> {
     return Scaffold(
       backgroundColor: Vx.gray600,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HStack([
-            VxBox(child: 'Sort by genre'.richText.semiBold.xl.white.make())
+            VxBox(child: 'Genres'.richText.semiBold.xl.white.make())
                 .p16
                 .make()
-                .glassMorphic()
                 .darkTheme()
-                .p4()
                 .expand(),
-          ]),
+          ]).backgroundColor(Vx.black),
           VStack([
-            InkWell(
-              onTap: () => navigateToFilter('genre', 'Satire'),
-              child: VxBox(
-                child: 'Satire'.richText.white.make(),
-              ).make(),
-            ),
-            InkWell(
-              onTap: () => navigateToFilter('genre', 'Horror'),
-              child: VxBox(
-                child: 'Horror'.richText.white.make(),
-              ).make(),
-            ),
-            InkWell(
-                onTap: () => navigateToFilter('genre', 'Mystery'),
-                child: VxBox(child: 'Mystery'.richText.white.make()).make())
+            SortOption(
+                sort: 'Satire', tap: () => navigateToFilter('genre', 'Satire')),
+            SortOption(
+                sort: 'Horror', tap: () => navigateToFilter('genre', 'Horror')),
+            SortOption(
+                sort: 'Mystery',
+                tap: () => navigateToFilter('genre', 'Mystery'))
           ]),
           5.heightBox,
           HStack([
-            VxBox(child: 'Sort by language'.richText.semiBold.xl.white.make())
+            VxBox(child: 'Languages'.richText.semiBold.xl.white.make())
                 .p16
                 .make()
-                .glassMorphic()
-                .p4()
+                .darkTheme()
                 .expand(),
-          ]),
+          ]).backgroundColor(Vx.black),
           5.heightBox,
-          HStack([
-            VxBox(child: 'Sort by author'.richText.semiBold.xl.white.make())
-                .p16
-                .make()
-                .glassMorphic()
-                .p4()
-                .expand(),
+          VStack([
+            SortOption(
+                sort: 'English',
+                tap: () => navigateToFilter('language', 'English')),
+            SortOption(
+                sort: 'Hindi', tap: () => navigateToFilter('language', 'Hindi'))
           ]),
         ],
       ).p8(),

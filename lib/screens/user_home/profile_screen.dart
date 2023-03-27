@@ -46,7 +46,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         radius: 45,
                         child: CircleAvatar(
                           radius: 44,
-                          child: Icon(Icons.person),
+                          child: Icon(
+                            Icons.person,
+                            size: 30,
+                          ),
                         ),
                       ),
                     ),

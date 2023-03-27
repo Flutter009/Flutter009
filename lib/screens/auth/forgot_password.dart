@@ -15,8 +15,8 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController repassword = TextEditingController();
+  final TextEditingController code = TextEditingController();
+  final TextEditingController newPassword = TextEditingController();
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -43,33 +43,54 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     Utils().getSizedBox(50),
                     TextFields(
-                      controller: email,
-                      hint: 'Your E-mail',
-                      obscure: false,
-                    ),
-                    Utils().getSizedBox(10),
-                    TextFields(
-                      controller: password,
-                      hint: 'Old Password',
-                      obscure: true,
-                    ),
-                    Utils().getSizedBox(10),
-                    TextFields(
-                      controller: repassword,
-                      hint: 'New Password',
-                      obscure: true,
-                    ),
+                        controller: email, hint: 'Your E-mail', obscure: false),
                     Utils().getSizedBox(25),
                     MyButton(
                       tap: () {
-                        if (email.text.isNotEmpty ||
-                            password.text.isNotEmpty ||
-                            repassword.text.isNotEmpty) {
+                        if (email.text.isNotEmpty) {
                           FirebaseAuth.instance
                               .sendPasswordResetEmail(email: email.text);
                         }
-                        Utils().showSnackBar(
-                            context, 'An email has been sent to $email');
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                icon: const Icon(Icons.password),
+                                title: 'A mail has been sent to $email.value'
+                                    .richText
+                                    .italic
+                                    .make(),
+                                content: TextFields(
+                                    controller: code,
+                                    hint: 'Enter the code',
+                                    obscure: false),
+                                actions: [
+                                  InkWell(
+                                    onTap: () {
+                                      try {
+                                        FirebaseAuth.instance
+                                            .confirmPasswordReset(
+                                                code: code.text,
+                                                newPassword: newPassword.text);
+                                      } on FirebaseAuthException catch (e) {
+                                        Utils().showSnackBar(
+                                            context, e.toString());
+                                      }
+                                    },
+                                    child: Container(
+                                      color: Vx.black,
+                                      width: double.infinity,
+                                      child: Center(
+                                        child: 'Reset password'
+                                            .richText
+                                            .semiBold
+                                            .make(),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              );
+                            });
                       },
                       text: ('Reset Password'),
                     ),

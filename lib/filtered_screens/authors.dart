@@ -26,10 +26,7 @@ class _FilterScreenState extends State<FilterScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Vx.black,
-        title: 'Sorted by ${widget.filter} : ${widget.filtertype}'
-            .richText
-            .white
-            .make(),
+        title: '${widget.filtertype} books'.richText.white.make(),
       ),
       backgroundColor: Vx.gray600,
       body: StreamBuilder(
