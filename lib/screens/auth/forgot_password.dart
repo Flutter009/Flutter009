@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:practice/screens/auth/change_password.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/utils.dart';
@@ -49,48 +50,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       tap: () {
                         if (email.text.isNotEmpty) {
                           FirebaseAuth.instance
-                              .sendPasswordResetEmail(email: email.text);
+                              .sendPasswordResetEmail(email: email.text)
+                              .then((value) {
+                            Utils().showSnackBar(context,
+                                'A mail has been sent to your $email , Please check your email');
+                          }).onError((error, stackTrace) => Utils()
+                                  .showSnackBar(context, error.toString()));
                         }
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                icon: const Icon(Icons.password),
-                                title: 'A mail has been sent to $email.value'
-                                    .richText
-                                    .italic
-                                    .make(),
-                                content: TextFields(
-                                    controller: code,
-                                    hint: 'Enter the code',
-                                    obscure: false),
-                                actions: [
-                                  InkWell(
-                                    onTap: () {
-                                      try {
-                                        FirebaseAuth.instance
-                                            .confirmPasswordReset(
-                                                code: code.text,
-                                                newPassword: newPassword.text);
-                                      } on FirebaseAuthException catch (e) {
-                                        Utils().showSnackBar(
-                                            context, e.toString());
-                                      }
-                                    },
-                                    child: Container(
-                                      color: Vx.black,
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: 'Reset password'
-                                            .richText
-                                            .semiBold
-                                            .make(),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              );
-                            });
                       },
                       text: ('Reset Password'),
                     ),
