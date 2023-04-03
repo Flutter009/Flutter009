@@ -50,6 +50,16 @@ class StorageMethods {
     String downloadUrl = await snap.ref.getDownloadURL();
     return downloadUrl;
   }
+
+  Future<String> uploadProfileToStorage(String id, File image) async {
+    String postId = const Uuid().v1();
+    Reference ref =
+        firebasestorage.ref().child('profile').child(id).child(postId);
+    UploadTask uploadTask = ref.putFile(image);
+    TaskSnapshot snap = await uploadTask;
+    String downloadUrl = await snap.ref.getDownloadURL();
+    return downloadUrl;
+  }
   // Future<String> uploadImageToStorage(String childName, Uint8List file) async {
   //   // creating location to our firebase storage
 

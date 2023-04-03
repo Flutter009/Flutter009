@@ -168,7 +168,7 @@ class _ShoppingState extends State<Shopping> {
               },
               backgroundColor: Vx.black,
               color: Vx.white,
-              activeColor: Vx.gray400,
+              activeColor: Vx.gray100,
               tabBackgroundColor: Vx.gray600,
               padding: const EdgeInsets.all(16),
               tabs: const [

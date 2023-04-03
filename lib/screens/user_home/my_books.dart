@@ -28,7 +28,6 @@ class _MyBooksState extends State<MyBooks> {
               .snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            print(snapshot.toString());
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -51,7 +50,7 @@ class _MyBooksState extends State<MyBooks> {
                                   snap: snapshot.data!.docs[index].data())));
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Stack(
                           alignment: AlignmentDirectional.bottomEnd,
                           children: [
